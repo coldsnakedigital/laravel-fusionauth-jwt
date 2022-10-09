@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Cookie;
 
 class FusionAuthJwtServiceProvider extends ServiceProvider
 {
@@ -29,7 +30,7 @@ class FusionAuthJwtServiceProvider extends ServiceProvider
             'fusionauth',
             fn (Application $app, string $name, array $config) => new RequestGuard(
                 fn (Request $request, FusionAuthJwtUserProvider $provider) => $provider->retrieveByCredentials([
-                    'jwt' => $request->bearerToken(),
+                    'jwt' => $this->getToken($request),
                 ]),
                 $app['request'],
                 $app['auth']->createUserProvider($config['provider'])
@@ -45,5 +46,13 @@ class FusionAuthJwtServiceProvider extends ServiceProvider
                 __DIR__.'/../config/fusionauth.php' => config_path('fusionauth.php'),
             ], 'fusionauth-jwt-config');
         }
+    }
+
+    private function getToken(Request $request) {
+        $jwt = $request->bearerToken();
+        if (empty($jwt)) {
+            $jwt = Cookie::get('jwt_token');
+        }
+        return $jwt;
     }
 }
