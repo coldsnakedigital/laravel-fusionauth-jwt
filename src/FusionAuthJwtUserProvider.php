@@ -20,7 +20,8 @@ class FusionAuthJwtUserProvider implements UserProvider
         }
 
         try {
-            $decodedJwt = FusionAuthJwt::decode($jwt);
+            $leeway = env('JWT_LEEWAY',(60 * 60 * 24)); // 24 hrs to test
+            $decodedJwt = FusionAuthJwt::decode($jwt, $leeway);
         } catch (Exception $e) {
             return null;
         }

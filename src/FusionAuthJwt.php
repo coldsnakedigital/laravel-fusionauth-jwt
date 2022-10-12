@@ -38,13 +38,15 @@ class FusionAuthJwt
      * @param  string $jwt
      * @return array
      */
-    public static function decode(string $jwt): array
+    public static function decode(string $jwt, $leeway=0): array
     {
         $supportedAlgs = Config::get('fusionauth.supported_algs');
 
         if (!in_array($supportedAlgs[0] ?? null, [self::ALGO_RS256, self::ALGO_HS256])) {
             throw new InvalidTokenAlgorithmException('Unsupported token signing algorithm configured. Must be either RS256 or HS256.');
         }
+
+        JWT::$leeway = $leeway;
 
         if ($supportedAlgs[0] === self::ALGO_RS256) {
             $data = JWT::decode($jwt, self::fetchPublicKeys(), $supportedAlgs);
@@ -56,7 +58,6 @@ class FusionAuthJwt
 
         return (array) $data;
     }
-
     /**
      * Validate a token by its aud and iss.
      *
