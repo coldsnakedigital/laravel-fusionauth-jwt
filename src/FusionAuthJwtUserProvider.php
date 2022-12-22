@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Log;
 
 class FusionAuthJwtUserProvider implements UserProvider
 {
@@ -36,9 +37,7 @@ class FusionAuthJwtUserProvider implements UserProvider
             return null;
         }
 
-        return $this->createModel()->setUserInfo($decodedJwt);
-
-        // return new FusionAuthJwtUser($decodedJwt);
+        return $this->createModel($decodedJwt);
     }
 
     /**
@@ -78,10 +77,10 @@ class FusionAuthJwtUserProvider implements UserProvider
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function createModel()
+    public function createModel(array $data)
     {
         $class = '\\'.ltrim($this->model, '\\');
 
-        return new $class;
+        return new $class($data);
     }
 }
