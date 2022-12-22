@@ -5,6 +5,7 @@ namespace DaniloPolani\FusionAuthJwt;
 use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Contracts\Foundation\Application;
 
 class FusionAuthJwtUserProvider implements UserProvider
 {
@@ -13,8 +14,8 @@ class FusionAuthJwtUserProvider implements UserProvider
 
     protected $model;
 
-    public function __construct() {
-        $this->config = $this->app['config']['auth.providers.fusionauth'];
+    public function __construct(Application $app) {
+        $this->config = $app['config']['auth.providers.fusionauth'];
         $this->model = $this->config['model'];
     }
     /**
