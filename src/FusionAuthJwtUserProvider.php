@@ -8,6 +8,15 @@ use Illuminate\Contracts\Auth\UserProvider;
 
 class FusionAuthJwtUserProvider implements UserProvider
 {
+
+    protected $config;
+
+    protected $model;
+
+    public function __construct() {
+        $this->config = $this->app['config']['auth.providers.fusionauth'];
+        $this->model = $this->config['model'];
+    }
     /**
      * {@inheritDoc}
      */
@@ -26,7 +35,9 @@ class FusionAuthJwtUserProvider implements UserProvider
             return null;
         }
 
-        return new FusionAuthJwtUser($decodedJwt);
+        return $this->createModel()->setUserInfo($decodedJwt);
+
+        // return new FusionAuthJwtUser($decodedJwt);
     }
 
     /**
@@ -59,5 +70,17 @@ class FusionAuthJwtUserProvider implements UserProvider
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
         return false;
+    }
+
+    /**
+     * Create a new instance of the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function createModel()
+    {
+        $class = '\\'.ltrim($this->model, '\\');
+
+        return new $class;
     }
 }

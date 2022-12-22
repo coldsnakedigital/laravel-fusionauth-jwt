@@ -102,6 +102,16 @@ class FusionAuthJwtUser implements Authenticatable
     }
 
     /**
+     * Get the whole user info array.
+     *
+     * @return array
+     */
+    public function setUserInfo($userInfo)
+    {
+        $this->userInfo = $userInfo;
+    }
+
+    /**
      * Stringify the current user.
      *
      * @return string
