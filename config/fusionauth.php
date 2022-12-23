@@ -61,4 +61,14 @@ return [
     |
     */
     'default_role' => null,
+
+    /*
+    |--------------------------------------------------------------------------
+    |   Super admin role name
+    |--------------------------------------------------------------------------
+    |
+    | Name of the super admin role to check when using the CheckRole middleware.
+    |
+    */
+    'super_role' => 'super_admin',
 ];
