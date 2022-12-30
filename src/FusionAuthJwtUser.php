@@ -3,7 +3,6 @@
 namespace DaniloPolani\FusionAuthJwt;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Jenssegers\Model\Model;
 
 /**
  * @property-read string $applicationId
@@ -19,7 +18,7 @@ use Jenssegers\Model\Model;
  * @property-read int $exp
  * @property-read int $iat
  */
-class FusionAuthJwtUser extends Model implements Authenticatable
+class FusionAuthJwtUser implements Authenticatable
 {
     private array $userInfo;
 
