@@ -37,7 +37,25 @@ class FusionAuthJwtUserProvider implements UserProvider
             return null;
         }
 
+        $decodedJwt = $this->setUrlPrefix($decodedJwt);
+
         return $this->createModel($decodedJwt);
+    }
+
+    private function setUrlPrefix($userData) {
+        $prefix = '';
+        if (strpos($userData->roles[0],'distributor') !== false) {
+            $prefix = 'distributor';
+        } else if (strpos($userData->roles[0],'dealer') !== false) {
+            $prefix = 'dealer';
+        } else if (strpos($userData->roles[0],'administrator') !== false) {
+            $prefix = 'admin';
+        } else if (strpos($userData->roles[0],'super_admin') !== false) {
+            $prefix = 'super-admin';
+        }
+
+        $userData['url_prefix'] = $prefix;
+        return $userData;
     }
 
     /**
