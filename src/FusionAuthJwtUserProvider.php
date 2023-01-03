@@ -44,13 +44,13 @@ class FusionAuthJwtUserProvider implements UserProvider
 
     private function setUrlPrefix($userData) {
         $prefix = '';
-        if (strpos($userData->roles[0],'distributor') !== false) {
+        if (strpos($userData['roles'][0],'distributor') !== false) {
             $prefix = 'distributor';
-        } else if (strpos($userData->roles[0],'dealer') !== false) {
+        } else if (strpos($userData['roles'][0],'dealer') !== false) {
             $prefix = 'dealer';
-        } else if (strpos($userData->roles[0],'administrator') !== false) {
+        } else if (strpos($userData['roles'][0],'administrator') !== false) {
             $prefix = 'admin';
-        } else if (strpos($userData->roles[0],'super_admin') !== false) {
+        } else if (strpos($userData['roles'][0],'super_admin') !== false) {
             $prefix = 'super-admin';
         }
 
