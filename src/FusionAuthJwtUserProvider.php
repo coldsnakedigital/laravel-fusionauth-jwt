@@ -48,7 +48,9 @@ class FusionAuthJwtUserProvider implements UserProvider
             $prefix = 'distributor';
         } else if (strpos($userData['roles'][0],'dealer') !== false) {
             $prefix = 'dealer';
-        } else if (strpos($userData['roles'][0],'administrator') !== false) {
+        } else if (strpos($userData['roles'][0],'editor') !== false) {
+            $prefix = 'editor';
+        } else if (strpos($userData['roles'][0],'admin') !== false) {
             $prefix = 'admin';
         } else if (strpos($userData['roles'][0],'super_admin') !== false) {
             $prefix = 'super-admin';
