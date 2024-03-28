@@ -103,4 +103,13 @@ class FusionAuthJwtUserProvider implements UserProvider
 
         return new $class($data);
     }
+    
+    public function rehashPasswordIfRequired(Authenticatable $user, array $credentials, bool $force = false)
+    {
+    }
+
+    public function getAuthPasswordName()
+    {
+        return 'password';
+    }
 }
